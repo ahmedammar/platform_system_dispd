@@ -192,7 +192,7 @@ int main(int argc, char **argv)
         }
 
         if (FD_ISSET(uevent_sock, &read_fds)) {
-            LOG_DISP("process uevent from kernel");
+            //LOG_DISP("process uevent from kernel");
             if ((rc = process_uevent_message(uevent_sock)) < 0) {
                 LOGE("Error processing uevent msg (%s)", strerror(errno));
             }

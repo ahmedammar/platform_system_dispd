@@ -21,7 +21,7 @@
 #include "dispd.h"
 #include "disp.h"
 
-#define DEBUG_DISP 1
+#define DEBUG_DISP 0
 
 static boolean disp_connected = false;
 static boolean disp_enabled = false;

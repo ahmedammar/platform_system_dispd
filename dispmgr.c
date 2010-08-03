@@ -31,7 +31,7 @@
 #include "dispmgr.h"
 #include "disp.h"
 
-#define DEBUG_DISPMGR 1
+#define DEBUG_DISPMGR 0
 
 int dispmgr_enable_disp(boolean enabled)
 {

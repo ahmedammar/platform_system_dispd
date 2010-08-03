@@ -26,7 +26,7 @@
 #include "switch.h"
 #include "uevent.h"
 
-#define DEBUG_BOOTSTRAP 1
+#define DEBUG_BOOTSTRAP 0
 
 static int disp_bootstrap_switch(char *sysfs_path);
 

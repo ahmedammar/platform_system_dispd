@@ -26,7 +26,7 @@
 #include "uevent.h"
 #include "dispmgr.h"
 
-#define DEBUG_UEVENT 1
+#define DEBUG_UEVENT 0
 
 #define UEVENT_PARAMS_MAX 32
 
