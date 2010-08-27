@@ -28,9 +28,7 @@ static boolean disp_enabled = false;
 
 int disp_connected_set(boolean enabled)
 {
-#if DEBUG_DISP
-    LOG_DISP("disp_connected_set(): %d",enabled);
-#endif
+    LOGI("disp_connected_set(): %d",enabled);
     disp_connected = enabled;
     //Disable the connection will also automatically disable the display
     if((disp_connected == false) && (disp_enabled == true)) {
