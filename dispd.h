@@ -55,6 +55,7 @@ int process_uevent_message(int socket);
 
 
 int switch_bootstrap(void);
+int detection_bootstrap(void);
 
 int send_msg(char *msg);
 int send_msg_with_data(char *msg, char *data);

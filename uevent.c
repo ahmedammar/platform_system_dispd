@@ -61,10 +61,11 @@ static void free_uevent(struct uevent *event);
 static char *get_uevent_param(struct uevent *event, char *param_name);
 
 static int handle_switch_event(struct uevent *);
-
+static int handle_sii9022_event(struct uevent *);
 
 static struct uevent_dispatch dispatch_table[] = {
     { "switch", handle_switch_event }, 
+    { "sii9022", handle_sii9022_event }, 
     { NULL, NULL }
 };
 
@@ -253,6 +254,11 @@ int needDVISwitch()
         return 0;
     }
 }
+#elifdef MX53_SMD_DISPD
+int needDVISwitch()
+{
+    return 1;
+}
 #else
 int needDVISwitch()
 {
@@ -283,3 +289,24 @@ static int handle_switch_event(struct uevent *event)
     return 0;
 }
 
+/*
+ * ---------------
+ * Uevent Handlers
+ * ---------------
+ */
+static int handle_sii9022_event(struct uevent *event)
+{
+    char *state = get_uevent_param(event, "EVENT");
+
+    LOGI("handle_sii9022_event: EVENT %s",state);
+    //If dvi is already the primarly display, not need to do the switch
+    if (needDVISwitch()) {
+        if (!strcmp(state, "plugin")) {
+            dispmgr_connected_set(true);
+        } else {
+            dispmgr_connected_set(false);
+        }
+    } 
+
+    return 0;
+}

@@ -114,6 +114,7 @@ int main(int argc, char **argv)
 
     // Switch
     switch_bootstrap();
+    detection_bootstrap();
 
     bootstrap = 0;
     /*
