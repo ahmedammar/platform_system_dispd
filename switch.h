@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
+
 #ifndef _SWITCH_H
 #define _SWITCH_H
 

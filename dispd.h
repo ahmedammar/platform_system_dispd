@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* Copyright (c) 2010 Freescale Semiconductors Inc. */
+/* Copyright (c) 2010 Freescale Semiconductor, Inc. */
 
 #ifndef DISPD_H__
 #define DISPD_H__

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
+
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>

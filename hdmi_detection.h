@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
+
 #ifndef _HDMI_DETECTION_H
 #define _HDMI_DETECTION_H
 

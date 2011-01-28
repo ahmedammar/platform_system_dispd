@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
+
 #ifndef _CMD_DISPATCH_H
 #define _CMD_DISPATCH_H
 
