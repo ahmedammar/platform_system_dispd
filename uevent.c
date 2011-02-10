@@ -1,6 +1,7 @@
 
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2010-2011 Freescale Semiconductor, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +16,6 @@
  * limitations under the License.
  */
 
-/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
 
 #include <string.h>
 #include <stdlib.h>
@@ -229,7 +229,7 @@ static char *get_uevent_param(struct uevent *event, char *param_name)
 
 //Return 1 if the switch need
 //Rely on the hardware config and kernel parameters
-#ifdef MX51_BBG_DISPD
+#if defined(MX51_BBG_DISPD)
 int needDVISwitch()
 {
     int ret = 0;
@@ -256,7 +256,7 @@ int needDVISwitch()
         return 0;
     }
 }
-#elifdef MX53_SMD_DISPD
+#elif defined(MX53_SMD_DISPD)
 int needDVISwitch()
 {
     return 1;
