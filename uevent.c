@@ -64,10 +64,12 @@ static char *get_uevent_param(struct uevent *event, char *param_name);
 
 static int handle_switch_event(struct uevent *);
 static int handle_sii9022_event(struct uevent *);
+static int handle_dvi_event(struct uevent *);
 
 static struct uevent_dispatch dispatch_table[] = {
     { "switch", handle_switch_event }, 
-    { "sii9022", handle_sii9022_event }, 
+    { "mxc_ddc", handle_dvi_event },
+    { "sii902x", handle_sii9022_event }, 
     { NULL, NULL }
 };
 
@@ -230,7 +232,7 @@ static char *get_uevent_param(struct uevent *event, char *param_name)
 //Return 1 if the switch need
 //Rely on the hardware config and kernel parameters
 #if defined(MX51_BBG_DISPD)
-int needDVISwitch()
+int needDisplaySwitch()
 {
     int ret = 0;
     char name[256];
@@ -257,12 +259,12 @@ int needDVISwitch()
     }
 }
 #elif defined(MX53_SMD_DISPD)
-int needDVISwitch()
+int needDisplaySwitch()
 {
     return 1;
 }
 #else
-int needDVISwitch()
+int needDisplaySwitch()
 {
     return 0;
 }
@@ -280,7 +282,7 @@ static int handle_switch_event(struct uevent *event)
 
     LOGI("handle_switch_event: state %s",state);
     //If dvi is already the primarly display, not need to do the switch
-    if ((!strcmp(name, DISPD_SWITCH_NAME))&&needDVISwitch()) {
+    if ((!strcmp(name, DISPD_SWITCH_NAME))&&needDisplaySwitch()) {
         if (!strcmp(state, "online")) {
             dispmgr_connected_set(true);
         } else {
@@ -293,7 +295,28 @@ static int handle_switch_event(struct uevent *event)
 
 /*
  * ---------------
- * Uevent Handlers
+ * Uevent Handlers for dvi plugin/plugout 
+ * ---------------
+ */
+static int handle_dvi_event(struct uevent *event)
+{
+    char *state = get_uevent_param(event, "EVENT");
+
+    LOGI("handle_dvi_event: EVENT %s",state);
+    //If dvi is already the primarly display, not need to do the switch
+    if (needDisplaySwitch()) {
+        if (!strcmp(state, "plugin")) {
+            dispmgr_connected_set(true);
+        } else {
+            dispmgr_connected_set(false);
+        }
+    } 
+
+    return 0;
+}
+/*
+ * ---------------
+ * Uevent Handlers for HDMI plugin and plugout
  * ---------------
  */
 static int handle_sii9022_event(struct uevent *event)
@@ -302,7 +325,7 @@ static int handle_sii9022_event(struct uevent *event)
 
     LOGI("handle_sii9022_event: EVENT %s",state);
     //If dvi is already the primarly display, not need to do the switch
-    if (needDVISwitch()) {
+    if (needDisplaySwitch()) {
         if (!strcmp(state, "plugin")) {
             dispmgr_connected_set(true);
         } else {

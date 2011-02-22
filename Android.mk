@@ -7,6 +7,7 @@ LOCAL_SRC_FILES:=                \
                   disp.c \
                   dispmgr.c \
                   switch.c \
+		  dvi_detection.c \
 		  hdmi_detection.c \
                   uevent.c \
                   cmd_dispatch.c

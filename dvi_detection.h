@@ -17,13 +17,13 @@
 
 /* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
 
-#ifndef _HDMI_DETECTION_H
-#define _HDMI_DETECTION_H
+#ifndef _DVI_DETECTION_H
+#define _DVI_DETECTION_H
 
 #include "dispd.h"
 
-#define SYSFS_CLASS_HDMI_DETECTION_PATH "/devices/platform/sii902x.0"
+#define SYSFS_CLASS_DVI_DETECTION_PATH "/sys/devices/platform/mxc_ddc.0"
 
-int hdmi_detection_bootstrap();
+int dvi_detection_bootstrap();
 
 #endif

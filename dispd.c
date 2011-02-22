@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* Copyright (c) 2010 Freescale Semiconductor, Inc. */
+/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
 
 #include <errno.h>
 #include <stdio.h>
@@ -40,7 +40,8 @@
 
 #include "dispd.h"
 #include "dispmgr.h"
-
+#include "dvi_detection.h"
+#include "hdmi_detection.h"
 
 #define DISPD_SOCKET "dispd"
 
@@ -114,7 +115,8 @@ int main(int argc, char **argv)
 
     // Switch
     switch_bootstrap();
-    detection_bootstrap();
+    dvi_detection_bootstrap();
+    hdmi_detection_bootstrap();
 
     bootstrap = 0;
     /*

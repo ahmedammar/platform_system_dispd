@@ -25,14 +25,14 @@
 #include <sys/types.h>
 
 #include "dispd.h"
-#include "hdmi_detection.h"
+#include "dvi_detection.h"
 #include "uevent.h"
 
 #define DEBUG_BOOTSTRAP 0
 
-#define SYSFS_CLASS_HDMI_DETECTION_PATH_STATE "/sys/devices/platform/sii902x.0/cable_state"
+#define SYSFS_CLASS_DVI_DETECTION_PATH_STATE "/sys/devices/platform/mxc_ddc.0/cable_state"
 
-int hdmi_detection_bootstrap()
+int dvi_detection_bootstrap()
 {
     char filename[255];
     char event_state[255];
@@ -40,15 +40,15 @@ int hdmi_detection_bootstrap()
     char *uevent_params[2];
     FILE *fp;
     memset(filename, 0, 255);
-    strcpy(filename,SYSFS_CLASS_HDMI_DETECTION_PATH_STATE);
+    strcpy(filename,SYSFS_CLASS_DVI_DETECTION_PATH_STATE);
     LOGI("detection_bootstrap IN");
     if (!(fp = fopen(filename, "r"))) {
-        LOGE("Error opening hdmi name path '%s' (%s)",
-             SYSFS_CLASS_HDMI_DETECTION_PATH_STATE, strerror(errno));
+        LOGE("Error opening dvi name path '%s' (%s)",
+             SYSFS_CLASS_DVI_DETECTION_PATH_STATE, strerror(errno));
        return -errno;
     }
     if (!fgets(event_state, sizeof(event_state), fp)) {
-        LOGE("Unable to read hdmi name");
+        LOGE("Unable to read dvi name");
         fclose(fp);
         return -EIO;
     }
@@ -59,7 +59,7 @@ int hdmi_detection_bootstrap()
     uevent_params[0] = (char *) strdup(tmp);
     uevent_params[2] = (char *) NULL;
 
-    if (simulate_uevent("sii902x", SYSFS_CLASS_HDMI_DETECTION_PATH, "add", uevent_params) < 0) {
+    if (simulate_uevent("sii902x", SYSFS_CLASS_DVI_DETECTION_PATH, "add", uevent_params) < 0) {
         LOGE("Error simulating uevent (%s)", strerror(errno));
         return -errno;
     }

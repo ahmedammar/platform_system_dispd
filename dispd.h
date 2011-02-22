@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* Copyright (c) 2010 Freescale Semiconductor, Inc. */
+/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
 
 #ifndef DISPD_H__
 #define DISPD_H__
@@ -55,7 +55,6 @@ int process_uevent_message(int socket);
 
 
 int switch_bootstrap(void);
-int detection_bootstrap(void);
 
 int send_msg(char *msg);
 int send_msg_with_data(char *msg, char *data);
