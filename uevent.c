@@ -54,6 +54,7 @@ struct uevent {
 
 struct uevent_dispatch {
     char *subsystem;
+    char *devpath;
     int (* dispatch) (struct uevent *);
 };
 
@@ -67,9 +68,9 @@ static int handle_sii9022_event(struct uevent *);
 static int handle_dvi_event(struct uevent *);
 
 static struct uevent_dispatch dispatch_table[] = {
-    { "switch", handle_switch_event }, 
-    { "mxc_ddc", handle_dvi_event },
-    { "sii902x", handle_sii9022_event }, 
+    { "switch", NULL, handle_switch_event }, 
+    { "mxc_ddc", NULL, handle_dvi_event },
+    { "sii902x", "/devices/platform/sii902x.0",handle_sii9022_event }, 
     { NULL, NULL }
 };
 
@@ -104,6 +105,7 @@ int process_uevent_message(int socket)
             for (p = s; *p != '@'; p++);
             p++;
             event->path = strdup(p);
+            LOGI("path:%s", event->path);
             first = 0;
         } else {
             if (!strncmp(s, "ACTION=", strlen("ACTION="))) {
@@ -178,7 +180,8 @@ static int dispatch_uevent(struct uevent *event)
     dump_uevent(event);
 #endif
     for (i = 0; dispatch_table[i].subsystem != NULL; i++) {
-        if (!strcmp(dispatch_table[i].subsystem, event->subsystem))
+        if (((dispatch_table[i].devpath != NULL)&&(!strcmp(dispatch_table[i].devpath, event->path)))||
+            (!strcmp(dispatch_table[i].subsystem, event->subsystem)))
             return dispatch_table[i].dispatch(event);
     }
 
