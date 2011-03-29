@@ -42,6 +42,13 @@
 #define NON_DVI_DISP_PORT "DI1"
 #endif
 
+//Config this based on hardware connections
+#ifdef MX53_SMD_DISPD
+//DI1 -- LVDS
+//DI0 -- HDMI
+#define NON_HDMI_DISP_PORT "DI1"
+#endif
+
 enum uevent_action { action_add, action_remove, action_change };
 
 struct uevent {
@@ -246,7 +253,7 @@ int needDisplaySwitch()
     memset(name, 0 ,256);
     fp = fopen("/sys/class/graphics/fb0/name", "r");
     if (!fgets(name, sizeof(name), fp)) {
-        LOGE("Error!Unable to read switch name");
+        LOGE("Error!Unable to read fb0 name");
         fclose(fp);
         return 0;
     }
@@ -264,7 +271,29 @@ int needDisplaySwitch()
 #elif defined(MX53_SMD_DISPD)
 int needDisplaySwitch()
 {
-    return 1;
+   int ret = 0;
+   char name[256];
+   FILE *fp;
+   //Read the string in /sys/class/graphics/fb0/name
+   //Check which display port for fb0
+   //Check whether the display port is HDMI
+   memset(name, 0 ,256);
+   fp = fopen("/sys/class/graphics/fb0/name", "r");
+   if (!fgets(name, sizeof(name), fp)) {
+        LOGE("Error!Unable to read fb0 name");
+        fclose(fp);
+        return 0;
+   }
+   LOGI("Current FB name:%s",name);
+   fclose(fp);
+   //If it has a string "DI1", switch to HDMI DI0 can be done
+   //Otherwise the primarly display is already on HDMI DI0
+   if(strstr(name,NON_HDMI_DISP_PORT) != NULL) {
+        return 1;
+   }
+   else{
+        return 0;
+   }
 }
 #else
 int needDisplaySwitch()
