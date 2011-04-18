@@ -112,7 +112,9 @@ int process_uevent_message(int socket)
             for (p = s; *p != '@'; p++);
             p++;
             event->path = strdup(p);
+#if DEBUG_UEVENT
             LOGI("path:%s", event->path);
+#endif
             first = 0;
         } else {
             if (!strncmp(s, "ACTION=", strlen("ACTION="))) {
