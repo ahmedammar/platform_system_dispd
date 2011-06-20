@@ -76,7 +76,7 @@ static int handle_dvi_event(struct uevent *);
 
 static struct uevent_dispatch dispatch_table[] = {
     { "switch", NULL, handle_switch_event }, 
-    { "mxc_ddc", NULL, handle_dvi_event },
+    { "mxc_ddc", "/devices/platform/mxc_ddc.0", handle_dvi_event },
     { "sii902x", "/devices/platform/sii902x.0",handle_sii9022_event }, 
     { NULL, NULL }
 };
