@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* Copyright (c) 2010-2011 Freescale Semiconductor, Inc. */
+/* Copyright 2010-2011 Freescale Semiconductor, Inc. */
 
 #include <stdlib.h>
 #include <string.h>
@@ -59,7 +59,7 @@ int dvi_detection_bootstrap()
     uevent_params[0] = (char *) strdup(tmp);
     uevent_params[2] = (char *) NULL;
 
-    if (simulate_uevent("sii902x", SYSFS_CLASS_DVI_DETECTION_PATH, "add", uevent_params) < 0) {
+    if (simulate_uevent("mxc_ddc", SYSFS_CLASS_DVI_DETECTION_PATH, "add", uevent_params) < 0) {
         LOGE("Error simulating uevent (%s)", strerror(errno));
         return -errno;
     }
